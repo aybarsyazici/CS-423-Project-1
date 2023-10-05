@@ -6,7 +6,8 @@ from nltk.corpus import stopwords
 import math
 from collections import Counter , defaultdict
 from tqdm.notebook import tqdm
-from typing import List, Tuple, Dict
+from typing import List
+import numpy as np
 
 #nltk.download('stopwords')
 #stemmer = PorterStemmer()
@@ -58,4 +59,11 @@ def count_terms(document: List[str]):
     max_count = terms.most_common(1)[0][1]
     return terms, max_count
 
-def compute_query_vectgor
+def compute_query_vector(query,vocabulary_dict,idfs):
+    query_vec = np.zeros((len(vocabulary_dict)))
+    counts, max_count = count_terms(query)
+    for term, count in counts.items():
+        if term in vocabulary_dict:
+            term_id = vocabulary_dict[term]
+            query_vec[term_id] = count/max_count * idfs[term]
+    return query_vec
