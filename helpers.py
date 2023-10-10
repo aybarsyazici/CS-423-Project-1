@@ -6,6 +6,7 @@ from nltk.corpus import stopwords
 import math
 from collections import Counter , defaultdict
 from tqdm.notebook import tqdm
+from sklearn.metrics.pairwise import cosine_similarity
 from typing import List
 import numpy as np
 
