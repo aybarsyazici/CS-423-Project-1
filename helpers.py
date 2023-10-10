@@ -67,3 +67,26 @@ def compute_query_vector(query,vocabulary_dict,idfs):
             term_id = vocabulary_dict[term]
             query_vec[term_id] = count/max_count * idfs[term]
     return query_vec
+
+def bm25(doc, query, idfs, avg_doc_length, k1, b):
+    """
+        Takes a document and a query and returns the BM25 score.
+
+        Note: Both the query and the document must be preprocessed.
+    """
+    score = 0
+    counts = Counter(doc)
+    for term_id, term in enumerate(query):
+        # Compute the score for the term
+        if term in counts:
+            score += idfs[term] * (counts[term] * (k1 + 1) / (counts[term] + k1 * (1 - b + b * len(doc) / avg_doc_length)))
+    return score
+
+def bm25_chunk(chunk, query, idfs, avg_doc_length, k1, b):
+    """
+        Apply bm25 to a chunk of documents.
+    """
+    scores = []
+    for doc in chunk:
+        scores.append(bm25(doc, query, idfs, avg_doc_length, k1, b))
+    return scores

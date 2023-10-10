@@ -1,0 +1,9 @@
+nltk
+pandas 
+scikit-learn 
+matplotlib 
+seaborn 
+jsonlines 
+tqdm
+scipy
+tensorflow
