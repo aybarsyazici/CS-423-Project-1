@@ -18,7 +18,7 @@ def tokenize(text, stemmer):
     text = "".join([ch for ch in text if ch not in string.punctuation])
     tokens = nltk.word_tokenize(text)
     stemmed = " ".join([stemmer.stem(word.lower()) for word in tokens if word not in stopwords.words('english')])
-    return stemmed.split()
+    return stemmed
 
 # compute IDF, storing idf values in a dictionary
 def idf_values(vocabulary, documents):
