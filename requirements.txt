@@ -1,3 +1,4 @@
+#pybind11
 nltk
 pandas 
 scikit-learn 
@@ -7,4 +8,4 @@ jsonlines
 tqdm
 scipy
 gensim
-fasttext
+#fasttext
