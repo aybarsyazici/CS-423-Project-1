@@ -91,3 +91,25 @@ def bm25_chunk(chunk, query, idfs, avg_doc_length, k1, b):
     for doc in chunk:
         scores.append(bm25(doc, query, idfs, avg_doc_length, k1, b))
     return scores
+
+# Define a function to process a batch of query vectors
+def process_batch(batch, aggregated_doc_vectors):
+    results = []
+    for query_vector in batch:
+        query_vector = query_vector.reshape(1, -1)
+        sim = cosine_similarity(query_vector, aggregated_doc_vectors)
+        # get the top 10 documents from the similarity matrix
+        indexes = np.argsort(sim, axis=-1, kind='quicksort', order=None) # This is sorted in ascending order
+        indexes = indexes[0]
+        indexes = indexes[::-1] # Convert to descending
+        results.append(indexes[0:10])
+    return results
+
+def find_sim(query_vector,aggregated_doc_vectors):
+    query_vector = query_vector.reshape(1, -1)
+    sim = cosine_similarity(query_vector, aggregated_doc_vectors)
+    # get the top 10 documents from the similarity matrix
+    indexes = np.argsort(sim, axis=-1, kind='quicksort', order=None) # This is sorted in ascending order
+    indexes = indexes[0]
+    indexes = indexes[::-1] # Convert to descending
+    return indexes[0:10]
